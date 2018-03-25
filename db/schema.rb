@@ -12,6 +12,13 @@
 
 ActiveRecord::Schema.define(version: 20180325050126) do
 
+  create_table "authentication_providers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_name_on_authentication_providers"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
@@ -21,6 +28,19 @@ ActiveRecord::Schema.define(version: 20180325050126) do
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["name"], name: "index_roles_on_name"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
+  create_table "user_authentications", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "authentication_provider_id"
+    t.string "uid"
+    t.string "token"
+    t.datetime "token_expires_at"
+    t.text "params"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["authentication_provider_id"], name: "index_user_authentications_on_authentication_provider_id"
+    t.index ["user_id"], name: "index_user_authentications_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
