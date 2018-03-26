@@ -1,12 +1,17 @@
+require 'byebug'
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def twitter
     create
   end
 
-  def google
+  def google_oauth2
     create
   end
+
+  # def google
+  #   create
+  # end
 
   def facebook
     create
@@ -15,6 +20,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
     def create
+      byebug
       auth_params = request.env["omniauth.auth"]
       provider = AuthenticationProvider.where(name: auth_params.provider).first
       authentication = provider.user_authentications.where(uid: auth_params.uid).first

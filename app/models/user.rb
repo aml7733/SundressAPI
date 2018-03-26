@@ -14,5 +14,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable
   devise :omniauthable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable
+         :omniauthable, omniauth_providers: [:google_oauth2]
+
+
 end
