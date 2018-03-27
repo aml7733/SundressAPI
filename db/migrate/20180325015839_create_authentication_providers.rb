@@ -7,7 +7,7 @@ class CreateAuthenticationProviders < ActiveRecord::Migration[5.1]
     end
     add_index "authentication_providers", ["name"], :name => "index_name_on_authentication_providers"
     AuthenticationProvider.create(name: 'twitter')
-    AuthenticationProvider.create(name: 'google')
+    AuthenticationProvider.create(name: 'google_oauth2')
     AuthenticationProvider.create(name: 'facebook')
   end
 end

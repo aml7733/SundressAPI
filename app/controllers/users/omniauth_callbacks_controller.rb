@@ -1,4 +1,3 @@
-require 'byebug'
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def twitter
@@ -9,10 +8,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     create
   end
 
-  # def google
-  #   create
-  # end
-
   def facebook
     create
   end
@@ -21,11 +16,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     def create
       auth_params = request.env["omniauth.auth"]
-      byebug
       provider = AuthenticationProvider.where(name: auth_params.provider).first
       authentication = provider.user_authentications.where(uid: auth_params.uid).first
       existing_user = current_user || User.where('email = ?', auth_params['info']['email']).first
-
       if authentication
         sign_in_with_existing_authentication(authentication)
       elsif existing_user
@@ -46,12 +39,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     def create_user_and_authentication_and_sign_in(auth_params, provider)
-      user = User.create_from_omniauth(auth_params)
+      user = User.create_or_update_from_omniauth(auth_params)
       if user.valid?
         create_authentication_and_sign_in(auth_params, user, provider)
       else
         flash[:error] = user.errors.full_messages.first
-        redirect_to new_user_registration_url
+        redirect_to root_path
       end
     end
 end

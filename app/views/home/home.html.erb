@@ -3,3 +3,9 @@ Welcome to the Sundress App.
 <%= link_to "Sign In", new_user_session_path %>
 <%= link_to "Sign Up", new_user_registration_path %>
 <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %>
+
+<% if current_user %>
+  <p>Hello, <%= current_user.first_name %></p>
+  <br>
+  <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
+<% end %>
