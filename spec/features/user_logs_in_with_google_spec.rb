@@ -10,14 +10,14 @@ RSpec.feature "user logs in" do
     expect(page).to have_link("Log Out")
   end
 
-  # scenario "using facebook" do
-  #   stub_facebook_omniauth
-  #   visit root_path
-  #   expect(page).to have_link("Sign in with Facebook")
-  #   click_link "Sign in with Facebook"
-  #   expect(page).to have_content("John")
-  #   expect(page).to have_link("Log Out")
-  # end
+  scenario "using facebook" do
+    stub_facebook_omniauth
+    visit root_path
+    expect(page).to have_link("Sign in with Facebook")
+    click_link "Sign in with Facebook"
+    expect(page).to have_content("John")
+    expect(page).to have_link("Log Out")
+  end
 
   def stub_google_omniauth
     OmniAuth.config.test_mode = true

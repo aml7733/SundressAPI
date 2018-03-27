@@ -1,18 +1,4 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  #
-  # def twitter
-  #   create
-  # end
-  #
-  # def google_oauth2
-  #   create
-  # end
-  #
-  # def facebook
-  #   create
-  # end
-  #
-  # private
 
   def create
     auth_params = request.env["omniauth.auth"]
