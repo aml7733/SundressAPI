@@ -19,6 +19,15 @@ RSpec.feature "user logs in" do
     expect(page).to have_link("Log Out")
   end
 
+  scenario "using twitter" do
+    stub_twitter_omniauth
+    visit root_path
+    expect(page).to have_link("Sign in with Twitter")
+    click_link "Sign in with Twitter"
+    expect(page).to have_content("John")
+    expect(page).to have_link("Log Out")
+  end
+
   def stub_google_omniauth
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
@@ -41,6 +50,24 @@ RSpec.feature "user logs in" do
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
       provider: "facebook",
+      uid: "1234567590",
+      info: {
+        email: "my.email@gmail.com",
+        first_name: "John",
+        last_name: "Doe"
+      },
+      credentials: {
+        token: "abcdefg132456789",
+        refresh_token: "123456789abcdefg",
+        expires_at: DateTime.now
+      }
+    })
+  end
+
+  def stub_twitter_omniauth
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new({
+      provider: "twitter",
       uid: "1234567590",
       info: {
         email: "my.email@gmail.com",

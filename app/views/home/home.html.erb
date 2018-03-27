@@ -4,6 +4,8 @@ Welcome to the Sundress App.
 <%= link_to "Sign Up", new_user_registration_path %>
 <%= link_to "Sign in with Google", "/users/auth/google_oauth2" %>
 <%= link_to "Sign in with Facebook", "/users/auth/facebook" %>
+<%= link_to "Sign in with Twitter", "/users/auth/twitter" %>
+
 
 <% if current_user %>
   <p>Hello, <%= current_user.first_name %></p>
